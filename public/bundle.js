@@ -2055,6 +2055,29 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 const Home = props => {
+  const {
+    username
+  } = props;
+  const initialState = {
+    content: [],
+    newsIds: []
+  };
+  const [state, setState] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialState);
+
+  const changeOptionForNewsDetails = newId => {
+    return {
+      method: 'GET',
+      url: 'https://seeking-alpha.p.rapidapi.com/news/get-details',
+      params: {
+        id: newId
+      },
+      headers: {
+        'x-rapidapi-host': 'seeking-alpha.p.rapidapi.com',
+        'x-rapidapi-key': 'af0e4ec1bfmsh44856a25984ea30p14d385jsn3f95739cb013'
+      }
+    };
+  };
+
   var options = {
     method: 'GET',
     url: 'https://seeking-alpha.p.rapidapi.com/news/list',
@@ -2068,25 +2091,6 @@ const Home = props => {
       'x-rapidapi-key': 'af0e4ec1bfmsh44856a25984ea30p14d385jsn3f95739cb013'
     }
   };
-  var optionsForNewsDetails = {
-    method: 'GET',
-    url: 'https://seeking-alpha.p.rapidapi.com/news/get-details',
-    params: {
-      id: '3734052'
-    },
-    headers: {
-      'x-rapidapi-host': 'seeking-alpha.p.rapidapi.com',
-      'x-rapidapi-key': 'af0e4ec1bfmsh44856a25984ea30p14d385jsn3f95739cb013'
-    }
-  };
-  const {
-    username
-  } = props;
-  const initialState = {
-    content: '',
-    newsIds: []
-  };
-  const [state, setState] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(initialState);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     axios__WEBPACK_IMPORTED_MODULE_2___default().request(options).then(function (response) {
       const arrWithNewsObj = response.data.data;
@@ -2101,22 +2105,23 @@ const Home = props => {
     }).catch(function (error) {
       console.error(error);
     });
-    axios__WEBPACK_IMPORTED_MODULE_2___default().request(optionsForNewsDetails).then(function (response) {
-      const contentStr = response.data.data.attributes.content;
-      setState(prevState => {
-        return { ...prevState,
-          content: contentStr
-        };
-      });
-    }).catch(function (error) {
-      console.error(error);
-    });
   }, []);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "Welcome, ", username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    dangerouslySetInnerHTML: {
-      __html: state.content
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, state.newsIds.map((newsId, idx) => {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    const contentArr = state.newsIds.map(newsId => {
+      return axios__WEBPACK_IMPORTED_MODULE_2___default().request(changeOptionForNewsDetails(newsId)).then(function (response) {
+        return response.data.data.attributes.content;
+      }).catch(function (error) {
+        console.error(error);
+      });
+    });
+    setState(prevState => {
+      return { ...prevState,
+        content: contentArr
+      };
+    });
+  }, [state.newsIds]);
+  console.log(state.content);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, "Welcome, ", username), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, state.newsIds.map((newsId, idx) => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
       key: idx
     }, newsId);
