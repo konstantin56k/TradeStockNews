@@ -22,7 +22,7 @@ export const Home = props => {
 
   async function getIdsAndDetails() {
     try {
-      const newsList = await axios.get(`https://seeking-alpha.p.rapidapi.com/news/list?id=${state.stockName}&size=2`, {
+      const newsList = await axios.get(`https://seeking-alpha.p.rapidapi.com/news/list?id=${state.stockName}&size=3`, {
         headers: {
           'x-rapidapi-host': 'seeking-alpha.p.rapidapi.com',
           'x-rapidapi-key': 'af0e4ec1bfmsh44856a25984ea30p14d385jsn3f95739cb013'
@@ -150,9 +150,9 @@ export const Home = props => {
     getIdsAndDetails()
   }, []);
 
-  // useEffect(() => {
-  //   getIdsAndDetails()
-  // }, [state.stockName]);
+  useEffect(() => {
+    getIdsAndDetails()
+  }, [state.stockName]);
 
   // console.log('outside state.content', state.content)
   // console.log('outside state.newsIds', state.newsIds)
@@ -161,13 +161,17 @@ export const Home = props => {
   return (
     <div>
       <div>
+        
         <form onSubmit={handleSubmit}>
-          <label htmlFor='stockName'>Enter stock name:</label>
-            <input name='stockName' type="text" value={state.stockName} onChange={handleChange}/>
-          <input type="submit" value="Make decision" />
+          <div className='search-box'>
+            <div><label htmlFor='stockName'>Enter stock name:</label></div>
+            <div><input name='stockName' type="text" value={state.stockName} onChange={handleChange}/></div>
+            <div><input className='submit-btn' type="submit" value="Make a decision" /></div>
+          </div>
         </form>
-        <div>
-          {positOrNegat(state.averageScore)}
+        
+        <div className='ave-score'>
+          {[positOrNegat(state.averageScore), ' ', state.averageScore]}
         </div>
         <ul>
           {state.sentiment.map((sentiment, idx) => {
@@ -176,18 +180,19 @@ export const Home = props => {
           }
         </ul>
       </div>
-      <div>
+      <div className='news-content'>
         {state.content.map((content, indx) => {
           return <div key={indx} dangerouslySetInnerHTML={{__html: content}} />
-        })}
+          })
+        }
       </div>
       
       <div>
         <ul>
-          {state.newsIds.map((newsId, idx) => {
+          {/* {state.newsIds.map((newsId, idx) => {
             return <li key={idx}>{newsId}</li>
             })
-          }
+          } */}
         </ul>
       </div>
       

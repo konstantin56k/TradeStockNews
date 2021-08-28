@@ -19,3 +19,30 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+img {
+  height: 500;
+  width: 500;
+}
+
+.ave-score {
+  font-size: 40px;
+}
+
+.news-content {
+  display: flex;
+  flex-wrap: wrap;
+
+}
+
+.search-box {
+  display: flex;
+}
+
+.submit-btn {
+  border: 2px solid rgb(180, 243, 109) ;
+  border-radius: 3px;
+  height: 30px;
+  width: 150px;
+  justify-content: space-evenly;
+}

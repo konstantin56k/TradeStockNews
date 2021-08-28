@@ -2072,7 +2072,7 @@ const Home = props => {
 
   async function getIdsAndDetails() {
     try {
-      const newsList = await axios__WEBPACK_IMPORTED_MODULE_2___default().get(`https://seeking-alpha.p.rapidapi.com/news/list?id=${state.stockName}&size=2`, {
+      const newsList = await axios__WEBPACK_IMPORTED_MODULE_2___default().get(`https://seeking-alpha.p.rapidapi.com/news/list?id=${state.stockName}&size=3`, {
         headers: {
           'x-rapidapi-host': 'seeking-alpha.p.rapidapi.com',
           'x-rapidapi-key': 'af0e4ec1bfmsh44856a25984ea30p14d385jsn3f95739cb013'
@@ -2194,40 +2194,43 @@ const Home = props => {
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     getIdsAndDetails();
-  }, []); // useEffect(() => {
-  //   getIdsAndDetails()
-  // }, [state.stockName]);
-  // console.log('outside state.content', state.content)
+  }, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    getIdsAndDetails();
+  }, [state.stockName]); // console.log('outside state.content', state.content)
   // console.log('outside state.newsIds', state.newsIds)
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
     onSubmit: handleSubmit
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "search-box"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("label", {
     htmlFor: "stockName"
-  }, "Enter stock name:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+  }, "Enter stock name:")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
     name: "stockName",
     type: "text",
     value: state.stockName,
     onChange: handleChange
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    className: "submit-btn",
     type: "submit",
-    value: "Make decision"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, positOrNegat(state.averageScore)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, state.sentiment.map((sentiment, idx) => {
+    value: "Make a decision"
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "ave-score"
+  }, [positOrNegat(state.averageScore), ' ', state.averageScore]), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, state.sentiment.map((sentiment, idx) => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
       key: idx
     }, sentiment);
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, state.content.map((content, indx) => {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "news-content"
+  }, state.content.map((content, indx) => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       key: indx,
       dangerouslySetInnerHTML: {
         __html: content
       }
     });
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null, state.newsIds.map((newsId, idx) => {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", {
-      key: idx
-    }, newsId);
-  }))));
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("ul", null)));
 };
 /**
  * CONTAINER
